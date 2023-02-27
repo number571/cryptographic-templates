@@ -11,7 +11,10 @@ typedef struct CL_classic_simple_substitution_t {
     CL_encoding_alpha_t *encr_encoder;
 } CL_classic_simple_substitution_t;
 
-extern CL_classic_simple_substitution_t *CL_classic_simple_substitution_new(CL_encoding_alpha_t *orig_encoder, CL_encoding_alpha_t *encr_encoder) {
+extern CL_classic_simple_substitution_t *CL_classic_simple_substitution_new(
+    CL_encoding_alpha_t *orig_encoder, 
+    CL_encoding_alpha_t *encr_encoder
+) {
     CL_classic_simple_substitution_t *ctx = (CL_classic_simple_substitution_t*)malloc(sizeof(CL_classic_simple_substitution_t));
 
     ctx->orig_encoder = orig_encoder;
@@ -26,8 +29,8 @@ extern void CL_classic_simple_substitution_free(CL_classic_simple_substitution_t
 
 extern uint8_t *CL_classic_simple_substitution_encrypt(CL_classic_simple_substitution_t *ctx, CL_mode_t m, uint8_t *output, uint8_t *input) {
     CL_encoding_alpha_t *encoder_read, *encoder_write;
-    size_t len = strlen((char*)input);
-    int encodedCh;
+    size_t input_len = strlen((char*)input);
+    int encoded_ch;
 
     switch (m) {
         case CL_MODE_ENCRYPT:
@@ -40,11 +43,11 @@ extern uint8_t *CL_classic_simple_substitution_encrypt(CL_classic_simple_substit
         break;
     }
 
-    for (int i = 0; i < len; i++) {
-        encodedCh = CL_encoding_alpha_encode(encoder_read, input[i]);
-        output[i] = CL_encoding_alpha_decode(encoder_write, encodedCh);
+    for (int i = 0; i < input_len; i++) {
+        encoded_ch = CL_encoding_alpha_encode(encoder_read, input[i]);
+        output[i] = CL_encoding_alpha_decode(encoder_write, encoded_ch);
     }
 
-    output[len] = '\0';
+    output[input_len] = '\0';
     return output;
 }

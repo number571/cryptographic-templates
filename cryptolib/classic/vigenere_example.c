@@ -15,10 +15,10 @@ int main(int argc, char *argv[]) {
         CL_ENCODING_ALPHA_ENGLISH_SIZE
     );
 
-    CL_classic_vigenere_t *cipher = CL_classic_vigenere_new(encoder);
+    CL_classic_vigenere_t *cipher = CL_classic_vigenere_new(encoder, key);
 
-    printf("%s\n", (char*)CL_classic_vigenere_encrypt(cipher, CL_MODE_ENCRYPT, key, message, message));
-    printf("%s\n", (char*)CL_classic_vigenere_encrypt(cipher, CL_MODE_DECRYPT, key, message, message));
+    printf("%s\n", (char*)CL_classic_vigenere_encrypt(cipher, CL_MODE_ENCRYPT, message, message));
+    printf("%s\n", (char*)CL_classic_vigenere_encrypt(cipher, CL_MODE_DECRYPT, message, message));
 
     CL_classic_vigenere_free(cipher);
     CL_encoding_alpha_free(encoder);
